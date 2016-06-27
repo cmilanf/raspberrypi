@@ -1,6 +1,7 @@
 module.exports = {
 	// Gets the newest file from a directory, filtering by regexp.
 	// Example: var f = getNewestFile("./", new RegExp('.*\.mp3'))
+	// NOT WORKING RIGHT, REVISE
 	getNewestFile: function (dir, regexp) {
 	    var fs = require("fs"),
 	     path = require('path'),
@@ -28,5 +29,23 @@ module.exports = {
 	    if (newest != null)
 	        return (path.join(dir, newest))
 	    return null
-	}
-}
+	},
+
+	// Return only base file name without dir
+	getMostRecentFileName: function (dir) {
+	    var fs = require('fs'),
+	    path = require('path'),
+	    _ = require('underscore');
+
+	    var files = fs.readdirSync(dir);
+
+	    // use underscore for max()
+	    return _.max(files, function (f) {
+	        var fullpath = path.join(dir, f);
+
+	        // ctime = creation time is used
+	        // replace with mtime for modification time
+	        return fs.statSync(fullpath).ctime;
+	    });
+        }
+};

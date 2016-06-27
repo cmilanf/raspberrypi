@@ -95,10 +95,11 @@ net.createServer(function (socket)
 		// I think this is not robust enoguh, specially for SMB shares, hence
 		// I'm wrapping in a try-catch
 		try {
-			lastCaptureFile = helpers.getNewestFile(capturePath, new RegExp('.*\.jpg'));
+			//lastCaptureFile = helpers.getNewestFile(capturePath, new RegExp('.*\.jpg'));
+			lastCaptureFile = helpers.getMostRecentFileName(capturePath);
 			winston.log('info', 'Sending MAIL notification with picture: %s', lastCaptureFile);
 			mailData.attachments[0].filename = lastCaptureFile;
-			mailData.attachments[0].path = lastCaptureFile;
+			mailData.attachments[0].path = capturePath + lastCaptureFile;
 			smtp.sendMail(mailData, function(error, info) {
 				if(error) {
 					winston.log('error',error);
