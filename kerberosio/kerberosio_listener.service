@@ -1,0 +1,13 @@
+[Service]
+ExecStart=/usr/bin/nodejs /etc/opt/kerberosio/listener/listener.js
+WorkingDirectory=/etc/opt/kerberosio/listener
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=kerberosio_listener
+User=<username>
+Group=<username>
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
