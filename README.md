@@ -36,3 +36,5 @@ Playing with the PC Speaker is fun. I though I could emulate the Big Ben clock s
 * **tone.sh**. Just for testing, it will play the tone given by command line.
 
 Putting **bigbensound.sh** in your CRON each 15 minutes will give you a nice Big Ben emulator. I'm actually looking for other clock tones.
+
+[![YouTube video link](https://img.youtube.com/vi/kgHkgoH74sA/0.jpg)](https://www.youtube.com/watch?v=kgHkgoH74sA)
