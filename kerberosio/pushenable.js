@@ -147,7 +147,7 @@ function repeatBeep(num, delay)
 // *** PROGRAM START ***
 
 // Logging
-winston.add(winston.transports.File, { filename: '/var/log/kerberosio_recordingstatus.log' });
+winston.add(winston.transports.File, { filename: '/var/log/kerberosio_pushenable.log' });
 winston.log('info', 'Switch recording button program initialized');
 winston.log('info', 'Monitoring button...');
 
