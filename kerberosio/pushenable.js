@@ -116,10 +116,20 @@ function switchRecordingStatus()
 	}
 }
 
-// setStatusLeds(status) will set leds accordingly the recording status
-function setStatusLeds(status)
+// setStatusLed(num, status) will set leds accordingly the recording status
+function setStatusLed(num, status)
 {
-	// Led activation code. For now this is a stub
+	switch(num)
+	{
+		case 1:
+			led1.write(status);
+			winston.log('info','Led 1 set with %s', status);
+			break;
+		case 2:
+			led2.write(status);
+			winston.log('info','Led 2 set with %s', status);
+			break;
+	}
 }
 
 // getStatusBeep(status) will beep depending on the recording status
@@ -151,6 +161,11 @@ winston.add(winston.transports.File, { filename: '/var/log/kerberosio_pushenable
 winston.log('info', 'Switch recording button program initialized');
 winston.log('info', 'Monitoring button...');
 
+status=getRecordingStatus();
+winston.log('info', 'Current recording status is %s', status);
+setStatusLed(1,status | 0);
+setStatusLed(2,status | 0);
+
 // Let's get notified whatever the button is pushed
 button.watch(function (err, value) {
 	if (err) {
@@ -172,14 +187,16 @@ button.watch(function (err, value) {
 		}
 		status = getRecordingStatus(); // First step is to get current status (it could has changed from web interface)
 		winston.log('info', 'Button pressed! Changing current recording status from %s to %s...', status, !status);
-		setStatusLeds(!status); // Set leds accordingly
+		setStatusLed(1,!status | 0); // Set leds accordingly
 		getStatusBeep(!status); // Let's beep to give the user feedback of on going activation or deactivation
 		// We don't want to start recording as soon as button is pressed (would catch us going out of home).
 		// We will wait the activationSeconds in order to start.
 		timerId=setTimeout(function() {
 			setRecordingStatus(!status); // The actual recording change
 			status = getRecordingStatus();
+			setStatusLed(2,status | 0);
 			winston.log('info', 'New recording status is %s', status);
+			repeatBeep(2,500);
 		},activationSeconds * 1000 * !status);
 	} else {
 		winston.log('info', 'Button was pressed, but no action taken due to time between: %s', timeBetween);
@@ -191,7 +208,8 @@ button.watch(function (err, value) {
 // a look to the file from time to time and update leds.
 setInterval(function(){
 	status = getRecordingStatus();
-	setStatusLeds(status);
+	setStatusLed(1,status | 0);
+	setStatusLed(2,status | 0);
 	winston.log('info', 'Current recording status was just checked. Current status: %s', status);
 }, checkSeconds*1000);
 
