@@ -180,24 +180,29 @@ button.watch(function (err, value) {
 		// Let's give the user the posibility of canceling an ongoing activation
 		if(timerId != null)
 		{
+			winston.log('info', 'User requested activation cancellation. Removing activation request...');
 			clearTimeout(timerId);
 			timerId=null;
-			getStatusBeep(false);
-			return 0;
-		}
-		status = getRecordingStatus(); // First step is to get current status (it could has changed from web interface)
-		winston.log('info', 'Button pressed! Changing current recording status from %s to %s...', status, !status);
-		setStatusLed(1,!status | 0); // Set leds accordingly
-		getStatusBeep(!status); // Let's beep to give the user feedback of on going activation or deactivation
-		// We don't want to start recording as soon as button is pressed (would catch us going out of home).
-		// We will wait the activationSeconds in order to start.
-		timerId=setTimeout(function() {
-			setRecordingStatus(!status); // The actual recording change
 			status = getRecordingStatus();
-			setStatusLed(2,status | 0);
-			winston.log('info', 'New recording status is %s', status);
-			repeatBeep(2,500);
-		},activationSeconds * 1000 * !status);
+			getStatusBeep(status);
+			setStatusLed(1,status | 0);
+			winston.log('info', 'Recording status remained %s', status);
+		} else {
+			status = getRecordingStatus(); // First step is to get current status (it could has changed from web interface)
+			winston.log('info', 'Button pressed! Changing current recording status from %s to %s in %s seconds...', status, !status, activationSeconds);
+			setStatusLed(1,!status | 0); // Set leds accordingly
+			getStatusBeep(!status); // Let's beep to give the user feedback of on going activation or deactivation
+			// We don't want to start recording as soon as button is pressed (would catch us going out of home).
+			// We will wait the activationSeconds in order to start.
+			timerId=setTimeout(function() {
+				setRecordingStatus(!status); // The actual recording change
+				status = getRecordingStatus();
+				setStatusLed(2,status | 0);
+				winston.log('info', 'New recording status is %s', status);
+				repeatBeep(2,500);
+				timerId=null;
+			},activationSeconds * 1000 * !status);
+		}
 	} else {
 		winston.log('info', 'Button was pressed, but no action taken due to time between: %s', timeBetween);
 	}
