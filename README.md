@@ -28,6 +28,7 @@ I modified the example program in order to perform the three mentioned actions. 
 * **helper.js**. Helper functions that allow to determine the most recent file in a folder.
 * **beepmotion.sh**. It's a script that beeps the PC Speaker via GPIO.
 * **kerberosio_listener.service**. A systemd configuration file for starting the listerner at boot time.
+* **pushenable.js**. kerberos.io is great, but having to enter the portal in order to enable or disable movement capture was really incovinient. This small program implements physical button enable/disable of the system, giving feedback through 2 LEDs and 1 buzzer (not the PC Speaker one).
 
 #pcspeaker
 Playing with the PC Speaker is fun. I though I could emulate the Big Ben clock sound with the GPIO PC Speaker. I didn't know anything of what signaling a PC Speaker needed in order to sound, but [Dale Mitchel] (https://github.com/DaleMitchell/pcspkr_keyboard) Github repository came into rescue. I modified the script, changing the interactive input with a fixed one and put some friendly vars resembling musical notes. The files here:
