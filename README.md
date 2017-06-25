@@ -30,7 +30,7 @@ I modified the example program in order to perform the three mentioned actions. 
 * **kerberosio_listener.service**. A systemd configuration file for starting the listerner at boot time.
 * **pushenable.js**. kerberos.io is great, but having to enter the portal in order to enable or disable movement capture was really incovinient. This small program implements physical button enable/disable of the system, giving feedback through 2 LEDs and 1 buzzer (not the PC Speaker one).
 
-#pcspeaker
+# pcspeaker
 Playing with the PC Speaker is fun. I though I could emulate the Big Ben clock sound with the GPIO PC Speaker. I didn't know anything of what signaling a PC Speaker needed in order to sound, but [Dale Mitchel](https://github.com/DaleMitchell/pcspkr_keyboard) Github repository came into rescue. I modified the script, changing the interactive input with a fixed one and put some friendly vars resembling musical notes. The files here:
 
 * **bigbensound.sh**. It will play the Big Ben sound depending current system clock.
