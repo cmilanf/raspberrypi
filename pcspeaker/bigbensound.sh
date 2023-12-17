@@ -30,7 +30,7 @@ export r2=69
 export m2=71
 
 if [ -z $1 ]; then
-	echo "BigBen sound script for Raspberri Pi PC Speaker GPIO"
+	echo "BigBen sound script for Raspberry Pi PC Speaker GPIO"
 	echo "by Carlos Milán Figueredo. http://www.hispamsx.org"
 	echo ""
 	echo "Usage: ./bigbensound.sh <BCM_GPIO> [quarter | half | halfquarter | hour]"
