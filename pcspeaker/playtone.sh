@@ -52,11 +52,11 @@ checkdeps
 while [ $# -gt 0 ]
 do
   case "$1" in
-    --gpio)
+    --gpio-pin)
       GPIO_PIN="$2"
       shift 2
       ;;
-    --file)
+    --filename)
       FILENAME="$2"
       shift 2
       ;;
